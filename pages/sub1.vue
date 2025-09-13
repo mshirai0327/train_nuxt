@@ -1,42 +1,86 @@
 <template>
-  <h1>Hello AG-Grid</h1>
-  <ag-grid-vue
-    :rowData="rowData"
-    :columnDefs="colDefs"
-    :rowDragManaged="true"
-    style="height: 500px"
-  >
-  </ag-grid-vue>
+  <h1>Hello sub1 vue test page</h1>
+
+  <div id="colorful">
+    <div
+      class="el_contextArea"
+      @click.left="() => (show = false)"
+      @click.right.prevent="
+        (e) => {
+          menu_position.top = e.pageY;
+          menu_position.left = e.pageX;
+          show = true;
+          console.log(e.pageX);
+        }
+      "
+    >
+      右クリックでコンテキストメニュー表示
+    </div>
+    <ul
+      class="el_contextMenu el_contextMenu__colorful"
+      :style="menu_position"
+      v-show="show"
+    >
+      <li>
+        <a href="#"><i class="fas fa-hamburger"></i>menu1</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-pizza-slice"></i>menu2</a>
+      </li>
+      <li>
+        <a href="#"><i class="fas fa-ice-cream"></i>menu3</a>
+      </li>
+    </ul>
+  </div>
 </template>
 
-<script setup>
-import {
-  AllCommunityModule,
-  ModuleRegistry,
-  RowDragModule,
-} from "ag-grid-community";
-import { AgGridVue } from "ag-grid-vue3";
+<script setup lang="ts">
+const show = ref(false);
 
-ModuleRegistry.registerModules([AllCommunityModule, RowDragModule]);
-// ModuleRegistry.registerModules([
-//   TextFilterModule,
-//   NumberFilterModule,
-//   RowDragModule,
-//   ClientSideRowModelModule,
-// ]);
-
-const rowData = ref([
-  { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-  { make: "Ford", model: "F-Series", price: 33850, electric: false },
-  { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-]);
-
-const colDefs = ref([
-  { field: "make", editable: true, rowDrag: true, rowDragManaged: true },
-  { field: "model", editable: false },
-  { field: "price", editable: false },
-  { field: "electric", editable: false },
-]);
+const menu_position = ref({
+  left: 0,
+  top: 0,
+});
+console.log(JSON.stringify(menu_position));
 </script>
 
-<style scoped></style>
+<style scoped>
+.el_contextArea {
+  width: 80%;
+  height: 200px;
+  margin: 2rem auto;
+  border: 1px solid #000;
+  position: relative;
+}
+.el_contextMenu {
+  position: absolute;
+  &.el_contextMenu__colorful {
+    > li {
+      list-style: none;
+      transition: box-shadow 0.1s;
+      &:hover {
+        box-shadow: 0 0 4px #000;
+      }
+      &:nth-child(3n + 1) {
+        background-color: #3e979b;
+      }
+      &:nth-child(3n + 2) {
+        background-color: #6db464;
+      }
+      &:nth-child(3n) {
+        background-color: #f3c14e;
+      }
+      > a {
+        padding: 0.5em 2em;
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        height: 100%;
+      }
+      i {
+        margin-right: 0.25em;
+      }
+    }
+  }
+}
+</style>
