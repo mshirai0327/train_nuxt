@@ -18,7 +18,10 @@
     </div>
     <ul
       class="el_contextMenu el_contextMenu__colorful"
-      :style="menu_position"
+      :style="{
+        top: menu_position.top + 'px',
+        left: menu_position.left + 'px',
+      }"
       v-show="show"
     >
       <li>
@@ -41,6 +44,7 @@ const menu_position = ref({
   left: 0,
   top: 0,
 });
+
 console.log(JSON.stringify(menu_position));
 </script>
 
