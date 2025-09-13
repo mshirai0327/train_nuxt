@@ -1,42 +1,45 @@
 <template>
-  <h1>Hello sub2 AG-Grid</h1>
-  <ag-grid-vue
-    :rowData="rowData"
-    :columnDefs="colDefs"
-    :rowDragManaged="true"
-    style="height: 500px"
-  >
-  </ag-grid-vue>
+  <div class="q-pa-md row items-start q-gutter-md">
+    <q-card class="my-card">
+      <q-card-section>
+        {{ lorem }}
+      </q-card-section>
+    </q-card>
+
+    <q-card
+      class="my-card text-white"
+      style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+    >
+      <q-card-section>
+        <div class="text-h6">Our Changing Planet</div>
+        <div class="text-subtitle2">by John Doe</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{ lorem }}
+      </q-card-section>
+    </q-card>
+  </div>
 </template>
 
-<script setup>
-import {
-  AllCommunityModule,
-  ModuleRegistry,
-  RowDragModule,
-} from "ag-grid-community";
-import { AgGridVue } from "ag-grid-vue3";
+<script>
+import "@quasar/extras/material-icons/material-icons.css";
+import "quasar/src/css/index.sass";
+//import { quasar } from "@quasar/vite-plugin";
 
-ModuleRegistry.registerModules([AllCommunityModule, RowDragModule]);
-// ModuleRegistry.registerModules([
-//   TextFilterModule,
-//   NumberFilterModule,
-//   RowDragModule,
-//   ClientSideRowModelModule,
-// ]);
-
-const rowData = ref([
-  { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-  { make: "Ford", model: "F-Series", price: 33850, electric: false },
-  { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-]);
-
-const colDefs = ref([
-  { field: "make", editable: true, rowDrag: true, rowDragManaged: true },
-  { field: "model", editable: false },
-  { field: "price", editable: false },
-  { field: "electric", editable: false },
-]);
+export default {
+  setup() {
+    return {
+      lorem:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    };
+  },
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.my-card {
+  width: 100%;
+  max-width: 250px;
+}
+</style>
