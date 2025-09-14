@@ -1,12 +1,6 @@
 <template>
   <h1>Hello sub2 AG-Grid</h1>
-  <ag-grid-vue
-    :rowData="rowData"
-    :columnDefs="colDefs"
-    :rowDragManaged="true"
-    style="height: 500px"
-  >
-  </ag-grid-vue>
+  <ag-grid-vue :gridOptions="gridOptions" style="height: 500px"> </ag-grid-vue>
 </template>
 
 <script setup>
@@ -18,25 +12,25 @@ import {
 import { AgGridVue } from "ag-grid-vue3";
 
 ModuleRegistry.registerModules([AllCommunityModule, RowDragModule]);
-// ModuleRegistry.registerModules([
-//   TextFilterModule,
-//   NumberFilterModule,
-//   RowDragModule,
-//   ClientSideRowModelModule,
-// ]);
 
-const rowData = ref([
-  { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-  { make: "Ford", model: "F-Series", price: 33850, electric: false },
-  { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-]);
-
-const colDefs = ref([
-  { field: "make", editable: true, rowDrag: true, rowDragManaged: true },
-  { field: "model", editable: false },
-  { field: "price", editable: false },
-  { field: "electric", editable: false },
-]);
+const gridOptions = ref({
+  rowData: [
+    { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+    { make: "Ford", model: "F-Series", price: 33850, electric: false },
+    { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+  ],
+  columnDefs: [
+    { field: "make", editable: true, rowDrag: true },
+    { field: "model" },
+    { field: "price" },
+    { field: "electric" },
+  ],
+  defaultColDef: {
+    editable: false,
+    cellStyle: { whiteSpace: "pre" },
+  },
+  rowDragManaged: true,
+});
 </script>
 
 <style scoped></style>
