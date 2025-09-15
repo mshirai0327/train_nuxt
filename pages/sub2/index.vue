@@ -30,6 +30,7 @@ const gridOptions = ref({
     cellStyle: { whiteSpace: "pre" },
   },
   rowDragManaged: true,
+  rowNumbers: true,
 });
 </script>
 
