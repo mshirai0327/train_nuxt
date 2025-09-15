@@ -7,8 +7,8 @@
       @click.left="() => (show = false)"
       @click.right.prevent="
         (e) => {
-          menu_position.top = e.pageY;
-          menu_position.left = e.pageX;
+          menu_position.top = e.pageY - 15;
+          menu_position.left = e.pageX - 40;
           show = true;
           console.log(e.pageX);
         }
@@ -52,14 +52,16 @@ console.log(JSON.stringify(menu_position));
 .el_contextArea {
   width: 80%;
   height: 200px;
-  margin: 2rem auto;
+  margin: 0 auto;
   border: 1px solid #000;
   position: relative;
 }
 .el_contextMenu {
   position: absolute;
+  border-radius: 20px;
   &.el_contextMenu__colorful {
     > li {
+      border-radius: 20px;
       list-style: none;
       transition: box-shadow 0.1s;
       &:hover {
