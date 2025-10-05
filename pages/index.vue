@@ -13,6 +13,36 @@ import { AgGridVue } from "ag-grid-vue3";
 
 ModuleRegistry.registerModules([AllCommunityModule, RowDragModule]);
 
+class TextEditorNoCursorSelect {
+  init(params) {
+    this.eInput = document.createElement("input");
+    this.eInput.type = "text";
+    this.eInput.value = params.value || "";
+    this.eInput.classList.add("ag-cell-edit-input");
+
+    // カーソルを末尾に配置
+    setTimeout(() => {
+      this.eInput.focus();
+      const length = this.eInput.value.length;
+      this.eInput.setSelectionRange(length, length);
+    }, 0);
+  }
+
+  getGui() {
+    return this.eInput;
+  }
+
+  getValue() {
+    return this.eInput.value;
+  }
+
+  destroy() {}
+
+  isPopup() {
+    return false;
+  }
+}
+
 const gridOptions = ref({
   rowData: [
     { row: 1, make: "Tesla", model: "Model Y", price: 64950, electric: true },
@@ -25,7 +55,12 @@ const gridOptions = ref({
       valueGetter: "node.rowIndex + 1",
       rowDrag: true,
     },
-    { field: "make", editable: true, rowDrag: false },
+    {
+      field: "make",
+      editable: true,
+      rowDrag: false,
+      cellEditor: TextEditorNoCursorSelect,
+    },
     { field: "model" },
     { field: "price" },
     { field: "electric" },
