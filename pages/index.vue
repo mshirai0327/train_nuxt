@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello sub2 AG-Grid</h1>
+  <h1>Hello main AG-Grid</h1>
   <ag-grid-vue :gridOptions="gridOptions" style="height: 500px"> </ag-grid-vue>
 </template>
 
@@ -35,6 +35,26 @@ const gridOptions = ref({
     cellStyle: { whiteSpace: "pre" },
   },
   rowDragManaged: true,
+  suppressKeyboardEvent: (params) => {
+    const { event, editing } = params;
+
+    // 編集中でない場合は通常処理
+    if (!editing) return false;
+
+    const key = event.key;
+
+    // IME変換中のEnterを抑制
+    if (key === "Enter" && event.isComposing) {
+      return true;
+    }
+
+    // keyCode 229 は IME 入力中を示す（古いブラウザ対応）
+    if (event.keyCode === 229) {
+      return true;
+    }
+
+    return false;
+  },
 });
 </script>
 
