@@ -22,19 +22,11 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import "@quasar/extras/material-icons/material-icons.css";
 import "quasar/src/css/index.sass";
-//import { quasar } from "@quasar/vite-plugin";
 
-export default {
-  setup() {
-    return {
-      lorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    };
-  },
-};
+const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 </script>
 
 <style scoped>
