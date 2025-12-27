@@ -7,6 +7,13 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# Dev stage
+FROM base AS dev
+ENV NODE_ENV=development
+COPY --link package.json package-lock.json ./
+RUN npm ci
+CMD [ "npm", "run", "dev" ]
+
 # Build stage
 FROM base AS build
 
