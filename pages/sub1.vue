@@ -36,7 +36,7 @@
     </ul>
   </div>
 <h1>そのままのAG Grid Editor</h1>
-  <ag-grid-vue :gridOptions="gridOptions" style="height: 500px"> </ag-grid-vue>
+  <ag-grid-vue :gridOptions="gridOptionsDefault" style="height: 500px"> </ag-grid-vue>
 </template>
 
 <script setup lang="ts">
@@ -49,7 +49,7 @@ import { AgGridVue } from "ag-grid-vue3";
 ModuleRegistry.registerModules([AllCommunityModule, RowDragModule]);
 
 
-const gridOptions = ref({
+const gridOptionsDefault = ref({
   rowData: [
     { row: 1, make: "Tesla", model: "Model Y", price: 64950, electric: true },
     { row: 1, make: "Ford", model: "F-Series", price: 33850, electric: false },

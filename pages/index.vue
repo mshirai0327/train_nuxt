@@ -1,6 +1,8 @@
 <template>
   <h1>Hello main AG-Grid</h1>
-  <ag-grid-vue :gridOptions="gridOptions" style="height: 500px"> </ag-grid-vue>
+  <ag-grid-vue :gridOptions="gridOptions" style="height: 300px"> </ag-grid-vue>
+  <h1>そのままのAG Grid Editor</h1>
+  <ag-grid-vue :gridOptions="gridOptionsDefault" style="height: 500px"> </ag-grid-vue>
 </template>
 
 <script setup>
@@ -19,6 +21,16 @@ class TextEditorNoCursorSelect {
     this.eInput.type = "text";
     this.eInput.value = params.value || "";
     this.eInput.classList.add("ag-cell-edit-input");
+
+    // inputのスタイルを調整して、セルと完全に一致させる
+    this.eInput.style.width = "100%";
+    this.eInput.style.height = "100%";
+    this.eInput.style.border = "none"; // ボーダーを削除
+    this.eInput.style.padding = "0"; // パディングを削除
+    this.eInput.style.margin = "0"; // マージンを削除
+    this.eInput.style.outline = "none"; // フォーカス時のアウトラインを削除
+    this.eInput.style.font = "inherit"; // フォントを継承
+    this.eInput.style.background = "transparent"; // 背景を透明に
 
     // カーソルを末尾に配置
     setTimeout(() => {
@@ -90,6 +102,34 @@ const gridOptions = ref({
 
     return false;
   },
+});
+
+const gridOptionsDefault = ref({
+  rowData: [
+    { row: 1, make: "Tesla", model: "Model Y", price: 64950, electric: true },
+    { row: 1, make: "Ford", model: "F-Series", price: 33850, electric: false },
+    { row: 1, make: "Toyota", model: "Corolla", price: 29600, electric: false },
+  ],
+  columnDefs: [
+    {
+      headerName: "Row",
+      valueGetter: "node.rowIndex + 1",
+      rowDrag: true,
+    },
+    {
+      field: "make",
+      editable: true,
+      rowDrag: false,
+    },
+    { field: "model" },
+    { field: "price" },
+    { field: "electric" },
+  ],
+  defaultColDef: {
+    editable: false,
+    cellStyle: { whiteSpace: "pre" },
+  },
+  rowDragManaged: true,
 });
 </script>
 
