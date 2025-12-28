@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello main AG-Grid</h1>
+  <h1>Fixed AG-Grid Editor</h1>
   <ag-grid-vue :gridOptions="gridOptions" style="height: 300px"> </ag-grid-vue>
   <h1>そのままのAG Grid Editor</h1>
   <ag-grid-vue :gridOptions="gridOptionsDefault" style="height: 500px"> </ag-grid-vue>
@@ -32,6 +32,27 @@ class TextEditorNoCursorSelect {
     this.eInput.style.font = "inherit"; // フォントを継承
     this.eInput.style.background = "transparent"; // 背景を透明に
 
+    // IME制御用フラグ
+    this.isComposing = false;
+
+    // イベントリスナーのバインド
+    this.onCompositionStart = () => {
+      this.isComposing = true;
+    };
+    this.onCompositionEnd = () => {
+      this.isComposing = false;
+    };
+    this.onKeyDown = (event) => {
+      // IME変換中のEnter押下時はイベントの伝播を止める
+      if (this.isComposing && (event.key === "Enter" || event.keyCode === 13)) {
+        event.stopPropagation();
+      }
+    };
+
+    this.eInput.addEventListener("compositionstart", this.onCompositionStart);
+    this.eInput.addEventListener("compositionend", this.onCompositionEnd);
+    this.eInput.addEventListener("keydown", this.onKeyDown);
+
     // カーソルを末尾に配置
     setTimeout(() => {
       this.eInput.focus();
@@ -48,7 +69,17 @@ class TextEditorNoCursorSelect {
     return this.eInput.value;
   }
 
-  destroy() {}
+  destroy() {
+    // リスナーのクリーンアップ
+    if (this.eInput) {
+      this.eInput.removeEventListener(
+        "compositionstart",
+        this.onCompositionStart
+      );
+      this.eInput.removeEventListener("compositionend", this.onCompositionEnd);
+      this.eInput.removeEventListener("keydown", this.onKeyDown);
+    }
+  }
 
   isPopup() {
     return false;
